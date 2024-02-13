@@ -1,0 +1,110 @@
+\documentclass[12pt, onecolumn, addpoints]{exam}
+\usepackage[a4paper, lmargin=2cm, tmargin=3cm, right=2cm]{geometry}  %For centering solution box
+\usepackage{minted}
+\usepackage{tikz}
+\usepackage{tabularx}
+\usepackage{multicol}
+
+\usepackage{xparse}
+\ExplSyntaxOn
+\NewDocumentCommand{\mulanswergrid}{ O{1} m m m }{
+    \begin{tikzpicture}[y=0.6cm]
+    \seq_set_split:Nnn \l_tmpa_seq{;}{#4}
+    \int_step_inline:nnnn {1} {1} {#3} {\node at (##1+1,#2) {\int_to_Alph:n{##1}};}
+    \int_step_inline:nnnn {#1} {1} {#1+#2-1} {
+        \node at (0, #1+#2-##1-1) {Dom.\ }; \node at (1, #1+#2-##1-1) {##1};
+        \int_step_inline:nnnn {1} {1} {#3} {
+            \node[draw,minimum~width=7mm,minimum~height=4mm] at (####1+1, ##1-#1) {};
+            \int_compare:nNnTF {####1} = {\seq_item:Nn \l_tmpa_seq {#1+#2-##1}} {\node[fill,minimum~width=7mm,minimum~height=4mm] at (####1+1, ##1-#1) {};}{}
+        }
+    }
+    \end{tikzpicture}
+}
+\ExplSyntaxOff
+
+% Impostazioni Documento
+\lhead{\PYEXP{data.sub_heading}\\}
+\rhead{\PYEXP{data.teacher}\\}
+\thispagestyle{empty}
+% ==========================================================
+\begin{document}
+    \begin{centering}
+        \LARGE \PYEXP{ data.heading }\\
+        \large \today\\[0.5em]
+        \large \PYEXP{ data.teacher }\par
+        \rule{\textwidth}{0.4pt}
+    \end{centering}
+    \nopointsinmargin
+    %% if correction
+    \printanswers
+    %% endif
+    \renewcommand{\solutiontitle}{\noindent\textbf{Soluzione:}\enspace}
+% ==========================================================
+% Istruzioni Generali
+    \textbf{Come compilare le risposte}
+    \begin{enumerate}
+        \item Leggi le domande
+        \item Segna la risposta tra quelle fornite o rispondi nell'apposito riquadro
+        \item 5 min prima della fine del test riporta le tue risposte nell'ultimo foglio
+        \item Consegna solo l'ultimo foglio
+    \end{enumerate}
+    \vspace{2cm}
+    \textbf{Durata del Test:} \PYEXP{ data.duration }
+    \newpage
+% ==========================================================
+    %% for section in data.sections
+    \section*{\PYEXP{ section.title }}
+    \rule{\textwidth}{0.4pt}
+    \begin{questions}
+        %% for question in section.questions
+        \question[\PYEXP{ question.points }]{\PYEXP{ question.text }\dotfill}
+        %% if question.type == "SINGLE_CHOICE"
+        \begin{choices}
+            %% for answer in question.answers
+                %% if answer.status == "correct"
+                    \correctchoice \PYEXP{ answer.text }
+                %% else
+                    \choice \PYEXP{ answer.text }
+                %% endif
+            %% endfor
+        \end{choices}
+        %% endif
+        \vspace{0.3cm}
+        %% endfor
+    \end{questions}
+    %% endfor
+
+% ==========================================================
+%    \newpage
+%    \thispagestyle{empty}
+% Foglio di Risposte
+%    \begin{centering}
+%        \LARGE Test d'ingresso di Telecomunicazioni - KANT\\
+%        \large \today\\[0.5em]
+%    \end{centering}
+%    \vspace{1cm}
+%    \noindent
+%    \makebox[0.55\textwidth][l]{Nome:\enspace\hrulefill}\hspace{3mm}
+%    \makebox[0.42\textwidth][c]{Classe:\enspace\hrulefill}\\
+%    \begin{centering}
+%        \rule{\textwidth}{0.4pt}
+%    \end{centering}
+%
+%    \vspace{0.5cm}
+%    \sffamily
+% ==========================================================
+% Risposte e Note
+%    \mulanswergrid{15}{4}{1;4;1;2;3;3;4;1;3;2;1;2;3;2;2}
+%    \hspace{10mm}
+%    \mulanswergrid[16]{15}{4}{1;3;3;2;4;2;2;4;2;3;2;4;3;4;1}\\
+%    Note dello Studente:
+%    \vspace*{\fill}
+%    \hfill
+%    \def\arraystretch{1.5}
+% Tabella di Valutazione
+%    \begin{tabular}{|c|c|c|}
+%        \hline
+%        \textbf{Punti Totali} & \textbf{Punti Ottenuti} & \textbf{Voto} \\ \hline
+%        30                       &                         &               \\ \hline
+%    \end{tabular}
+\end{document}

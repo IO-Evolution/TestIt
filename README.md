@@ -1,2 +1,6 @@
 # TestIt
-Test Builder. Using Interface build with Python and PDFs build with LaTeX
+Basic PDF generation for tests, solution and correction.
+
+## Usage
+
+## Templating
