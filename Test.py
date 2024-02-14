@@ -3,9 +3,9 @@ import jinja2
 
 from Exam import Exam
 
-ex = Exam("./input/TestInformatica.json")
+ex = Exam("input/TestInformatica.json")
 
-env = jinja2.Environment(loader=jinja2.loaders.FileSystemLoader('./templates'),
+env = jinja2.Environment(loader=jinja2.loaders.FileSystemLoader('templates'),
                          variable_start_string='\PYEXP{',
                          variable_end_string='}',
                          line_statement_prefix='%%',
